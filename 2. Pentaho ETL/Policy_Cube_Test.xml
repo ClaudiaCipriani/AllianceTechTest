@@ -1,0 +1,88 @@
+<Schema name="Alliance_Target">
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Year">
+    <Hierarchy name="Years" visible="true" hasAll="true" primaryKey="year">
+      <Table name="dim_years">
+      </Table>
+      <Level name="Year" visible="true" table="dim_years" column="year" type="Numeric" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="year">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Geo Scopes">
+    <Hierarchy name="Geo Scopes" visible="true" hasAll="true" primaryKey="id">
+      <Table name="dim_geographic_scopes">
+      </Table>
+      <Level name="Name" visible="true" table="dim_geographic_scopes" column="name" nameColumn="name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="name">
+      </Level>
+      <Level name="Definition" visible="true" table="dim_geographic_scopes" column="definition" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="definition">
+      </Level>
+      <Level name="Geo Scope ID" visible="true" table="dim_geographic_scopes" column="id" nameColumn="id" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="id">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Location Elements">
+    <Hierarchy name="Location Elements" visible="true" hasAll="true" primaryKey="id">
+      <Table name="dim_loc_elements">
+      </Table>
+      <Level name="Type_1_Region_2_Country" visible="true" table="dim_loc_elements" column="element_type_id" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="element_type_id">
+      </Level>
+      <Level name="Location ID" visible="true" table="dim_loc_elements" column="id" nameColumn="id" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="id">
+      </Level>
+      <Level name="Name" visible="true" table="dim_loc_elements" column="name" nameColumn="name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="name">
+      </Level>
+      <Level name="ISO_Alpha_2" visible="true" table="dim_loc_elements" column="iso_alpha_2" nameColumn="iso_alpha_2" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="iso_alpha_2">
+      </Level>
+      <Level name="IS_Numeric" visible="true" table="dim_loc_elements" column="iso_numeric" nameColumn="iso_numeric" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="iso_numeric">
+      </Level>
+      <Level name="Parent ID" visible="true" table="dim_loc_elements" column="parent_id" nameColumn="parent_id" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="parent_id">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Global Units">
+    <Hierarchy name="Global Units" visible="true" hasAll="true" primaryKey="id">
+      <Table name="dim_global_units">
+      </Table>
+      <Level name="Global Unit ID" visible="true" table="dim_global_units" column="id" nameColumn="id" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="id">
+      </Level>
+      <Level name="Smo Code" visible="true" table="dim_global_units" column="smo_code" nameColumn="smo_code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="smo_code">
+      </Level>
+      <Level name="Name" visible="true" table="dim_global_units" column="name" nameColumn="name" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="name">
+      </Level>
+      <Level name="Acronym" visible="true" table="dim_global_units" column="acronym" nameColumn="acronym" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="acronym">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Sub Idos">
+    <Hierarchy name="Sub Idos" visible="true" hasAll="true" primaryKey="id">
+      <Table name="dim_srf_sub_idos">
+      </Table>
+      <Level name="Sub Ido ID" visible="true" table="dim_srf_sub_idos" column="id" nameColumn="id" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="id">
+      </Level>
+      <Level name="Description" visible="true" table="dim_srf_sub_idos" column="description" nameColumn="description" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="description">
+      </Level>
+      <Level name="Ido ID" visible="true" table="dim_srf_sub_idos" column="ido_id" nameColumn="ido_id" type="Integer" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="ido_id">
+      </Level>
+      <Level name="Smo Code" visible="true" table="dim_srf_sub_idos" column="smo_code" nameColumn="smo_code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never" captionColumn="smo_code">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Policies_2018_2019" caption="Policies information for 2018 and 2019" visible="true" cache="true" enabled="true">
+    <Table name="fact_project_policies">
+    </Table>
+    <DimensionUsage source="Year" name="Policies per Year" visible="true" foreignKey="year" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Location Elements" name="Policies per Location" visible="true" foreignKey="id_loc_element" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Global Units" name="Policies per Global Units" visible="true" foreignKey="id_global_unit" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Geo Scopes" name="Policies per Geo Scopes" visible="true" foreignKey="id_geographic_scopes" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Sub Idos" name="Policies per Sub Idos" visible="true" foreignKey="id_sub_idos" highCardinality="false">
+    </DimensionUsage>
+    <Measure name="Number of Policies" column="project_policy_id" datatype="Numeric" aggregator="distinct count" visible="true">
+    </Measure>
+    <Measure name="Title" column="title" datatype="String" aggregator="distinct count" visible="true">
+    </Measure>
+    <Measure name="Description" column="description" datatype="String" aggregator="distinct count" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
